@@ -154,6 +154,29 @@ require('lazy').setup({
     'tpope/vim-fugitive',
   },
   {
+    'folke/snacks.nvim',
+    priority = 1000,
+    lazy = false,
+    ---@type snacks.Config
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+      bigfile = { enabled = true },
+      dashboard = { enabled = true, example = 'advanced' },
+      explorer = { enabled = true },
+      indent = { enabled = true },
+      input = { enabled = true },
+      picker = { enabled = true },
+      notifier = { enabled = false },
+      quickfile = { enabled = true },
+      scope = { enabled = true },
+      scroll = { enabled = true },
+      statuscolumn = { enabled = true },
+      words = { enabled = true },
+    },
+  },
+  {
     'ThePrimeagen/harpoon',
     branch = 'harpoon2',
     opts = {
@@ -167,7 +190,7 @@ require('lazy').setup({
     keys = function()
       local keys = {
         {
-          '<leader>H',
+          '<leader>a',
           function()
             require('harpoon'):list():add()
             print 'Added current file to Harpoon'
@@ -175,24 +198,46 @@ require('lazy').setup({
           desc = 'Harpoon File',
         },
         {
-          '<leader>h',
+          '<c-e>',
           function()
             local harpoon = require 'harpoon'
             harpoon.ui:toggle_quick_menu(harpoon:list())
           end,
           desc = 'Harpoon Quick Menu',
         },
-      }
-
-      for i = 1, 5 do
-        table.insert(keys, {
-          '<leader>' .. i,
+        {
+          '<c-h>',
           function()
-            require('harpoon'):list():select(i)
+            local harpoon = require 'harpoon'
+            harpoon:list():select(1)
           end,
-          desc = 'Harpoon to File ' .. i,
-        })
-      end
+          desc = 'Select Harpoon File 1',
+        },
+        {
+          '<c-t>',
+          function()
+            local harpoon = require 'harpoon'
+            harpoon:list():select(2)
+          end,
+          desc = 'Select Harpoon File 2',
+        },
+        {
+          '<c-n>',
+          function()
+            local harpoon = require 'harpoon'
+            harpoon:list():select(3)
+          end,
+          desc = 'Select Harpoon File 3',
+        },
+        {
+          '<c-s>',
+          function()
+            local harpoon = require 'harpoon'
+            harpoon:list():select(4)
+          end,
+          desc = 'Select Harpoon File 4',
+        },
+      }
       return keys
     end,
   },
@@ -375,7 +420,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>f.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
-      -- vim.keymap.set('n', '<leader>ps', builtin.grep_string { search = vim.fn.input 'Grep > ' }, { desc = '[ ] Find existing buffers' })
+      -- vim.keymap.set('n', '<leader>ps', builtin.grep_string { search = vim.fn.input 'Grep > ' }, { desc = 'Find a word' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -388,7 +433,7 @@ require('lazy').setup({
 
       -- It's also possible to pass additional configuration options.
       --  See `:help telescope.builtin.live_grep()` for information about particular keys
-      vim.keymap.set('n', '<leader>s/', function()
+      vim.keymap.set('n', '<leader>lg', function()
         builtin.live_grep {
           grep_open_files = true,
           prompt_title = 'Live Grep in Open Files',
@@ -850,7 +895,6 @@ require('lazy').setup({
       --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
       --  - ci'  - [C]hange [I]nside [']quote
       require('mini.ai').setup { n_lines = 500 }
-
       require('mini.align').setup {
         -- Module mappings. Use `''` (empty string) to disable one.
         mappings = {

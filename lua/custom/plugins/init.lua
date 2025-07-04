@@ -3,5 +3,5 @@
 --
 -- See the kickstart.nvim README for more information
 require 'custom.plugins.fugitive'
--- require 'custom.plugins.harpoon2'
 require 'custom.plugins.copilot'
+-- require 'custom.plugins.snacks'
